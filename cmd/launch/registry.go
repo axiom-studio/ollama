@@ -33,7 +33,7 @@ type IntegrationInfo struct {
 	Description string
 }
 
-var launcherIntegrationOrder = []string{"claude", "chatgpt", "hermes", "openclaw", "opencode", "hermes-desktop", "codex", "copilot", "omp", "cline", "droid", "dsh", "pi", "pool", "qwen"}
+var launcherIntegrationOrder = []string{"claude", "chatgpt", "hermes", "openclaw", "opencode", "hermes-desktop", "codex", "copilot", "omp", "cline", "droid", "dsh", "openseal", "pi", "pool", "qwen"}
 
 var integrationSpecs = []*IntegrationSpec{
 	{
@@ -182,6 +182,18 @@ var integrationSpecs = []*IntegrationSpec{
 			},
 			URL:     "https://github.com/deepseek-ai/deepseek-harness",
 			Command: []string{"npm", "install", "-g", deepSeekHarnessNpmPackage},
+		},
+	},
+	{
+		Name:        "openseal",
+		Runner:      &OpenSeal{},
+		Description: "Durable kernel for autonomous agents and teams",
+		Install: IntegrationInstallSpec{
+			CheckInstalled: func() bool {
+				_, err := exec.LookPath("openseal")
+				return err == nil
+			},
+			URL: openSealReleasesURL,
 		},
 	},
 	{

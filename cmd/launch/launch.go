@@ -299,6 +299,7 @@ Supported integrations:
   omp             OMP
   droid           Droid
   dsh             DeepSeek Harness (alias: deepseek-harness)
+  openseal        OpenSeal
   kimi            Kimi Code CLI
   muse            Muse Code (aliases: muse-code)
   pi              Pi
@@ -317,6 +318,7 @@ Examples:
   ollama launch hermes
   ollama launch hermes-desktop
   ollama launch dsh
+  ollama launch openseal
   ollama launch droid --config (does not auto-launch)
   ollama launch codex --restore
   ollama launch codex -- --sandbox workspace-write`,

@@ -1,0 +1,65 @@
+---
+title: OpenSeal
+---
+
+[OpenSeal](https://github.com/axiom-studio/openseal) is a prompt-first, durable kernel for autonomous agents and teams. Describe an outcome, review the proposed agents, and run governed work from its terminal UI.
+
+## Install
+
+Download OpenSeal 1.0.20 or later from the [releases page](https://github.com/axiom-studio/openseal/releases) and put the `openseal` binary on your `PATH`. Release archives are available for macOS (Intel and Apple silicon), Linux (x86_64), and Windows (x86_64). There is no Linux arm64 binary.
+
+<Note>OpenSeal requires a larger context window. Use a context window of at least 16k tokens with local models. See [Context length](/context-length) for more information.</Note>
+
+## Usage with Ollama
+
+### Quick setup
+
+```shell
+ollama launch openseal
+```
+
+### Run directly with a model
+
+```shell
+ollama launch openseal --model qwen3.5:4b
+```
+
+### Pass arguments through to OpenSeal
+
+Arguments after `--` are passed to `openseal tui`:
+
+```shell
+ollama launch openseal -- --download-dir ~/openseal-artifacts
+```
+
+## How it works
+
+`ollama launch openseal` starts the OpenSeal daemon with the selected model, then opens the OpenSeal terminal UI. When you quit the terminal UI, Ollama stops the daemon.
+
+Ollama keeps OpenSeal's data in `~/.ollama/launch/openseal`, separate from the OpenSeal desktop app. Agents you create there are available the next time you launch. The daemon log is `~/.ollama/launch/openseal/logs/daemon.log`.
+
+Local models can take several minutes to generate a proposal or an agent turn. Ollama allows up to 10 minutes per model request.
+
+## Manual setup
+
+OpenSeal connects to Ollama using the OpenAI-compatible API via environment variables.
+
+1. Start the daemon:
+
+```shell
+export OPENSEAL_API_TOKEN=<choose-a-token>
+OPENSEAL_LLM_BASE_URL=http://localhost:11434/v1 \
+OPENSEAL_LLM_MODEL=qwen3.5:4b \
+OPENAI_API_KEY=ollama \
+OPENSEAL_LLM_STRUCTURED_OUTPUT=json_schema \
+OPENSEAL_LLM_TIMEOUT=10m \
+openseal daemon --config ~/openseal/daemon.yaml --context ~/openseal/context.yaml --listen 127.0.0.1:0 --standalone-operator --desktop-operator
+```
+
+The daemon prints its address in a line that starts with `OPENSEAL_DAEMON`.
+
+2. In another terminal with the same `OPENSEAL_API_TOKEN`, open the terminal UI:
+
+```shell
+openseal tui --endpoint http://127.0.0.1:<port>
+```

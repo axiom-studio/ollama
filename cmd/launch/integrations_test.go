@@ -70,6 +70,7 @@ func TestIntegrationLookup(t *testing.T) {
 		{"dsh", "dsh", true, "DeepSeek Harness"},
 		{"deepseek harness alias", "deepseek-harness", true, "DeepSeek Harness"},
 		{"opencode", "opencode", true, "OpenCode"},
+		{"openseal", "openseal", true, "OpenSeal"},
 		{"omp", "omp", true, "Oh My Pi"},
 		{"pool", "pool", true, "Poolside"},
 		{"unknown integration", "unknown", false, ""},
@@ -90,7 +91,7 @@ func TestIntegrationLookup(t *testing.T) {
 }
 
 func TestIntegrationRegistry(t *testing.T) {
-	expectedIntegrations := []string{"claude", "claude-desktop", "cline", "codex", "chatgpt", "kimi", "muse", "droid", "dsh", "opencode", "omp", "hermes", "hermes-desktop", "pool", "qwen"}
+	expectedIntegrations := []string{"claude", "claude-desktop", "cline", "codex", "chatgpt", "kimi", "muse", "droid", "dsh", "opencode", "openseal", "omp", "hermes", "hermes-desktop", "pool", "qwen"}
 	for _, name := range expectedIntegrations {
 		t.Run(name, func(t *testing.T) {
 			r, ok := integrations[name]
